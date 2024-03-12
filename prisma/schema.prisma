@@ -1,0 +1,58 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+ 
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Hostel{
+  id String @id @default(uuid())
+  userId String
+  title String @db.Text
+  description String @db.LongText
+  image String
+  County String
+  Town String
+  locationDescription String @db.LongText
+  bikeRental Boolean @default(false)
+  shopping Boolean @default(false)
+  restaurants Boolean @default(false)
+  addedAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+ 
+  
+}
+
+model Room{
+  id String @id @default(uuid())
+  title String
+  description String @db.LongText
+   bedCount Int @default(0)
+   guestCount Int @default(0)
+   bathroomCount Int @default(0)
+   kingBedCount Int @default(0)
+   queenBedCount Int @default(0)
+   image String
+   roomPrice Int
+     roomService Boolean @default(false)
+     roofTop Boolean @default(false)
+     airConditiom Boolean @default(false)
+     bikeRental Boolean @default(false)
+   
+
+
+}
+
+model Booking{
+  id String @id @default(uuid())
+  userName String
+  userId String
+  hostelName String
+  hostelId String
+  roomName String
+  roomId String
+
+}

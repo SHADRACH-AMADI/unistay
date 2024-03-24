@@ -1,35 +1,43 @@
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
- 
-}
-
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fulltextSearch","fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Hostel{
+  hostelId String
   id String @id @default(uuid())
   userId String
   title String @db.Text
-  description String @db.LongText
+  description String 
   image String
   County String
+  constituency String
   Town String
-  locationDescription String @db.LongText
+  locationDescription String 
   bikeRental Boolean @default(false)
   shopping Boolean @default(false)
   restaurants Boolean @default(false)
   addedAt DateTime @default(now())
   updatedAt DateTime @default(now())
- 
+  rooms Room[]
+  bookings Booking[]
   
+
+
 }
 
 model Room{
   id String @id @default(uuid())
+  roomId String
+  hostelId String
   title String
-  description String @db.LongText
+  description String
    bedCount Int @default(0)
    guestCount Int @default(0)
    bathroomCount Int @default(0)
@@ -37,22 +45,46 @@ model Room{
    queenBedCount Int @default(0)
    image String
    roomPrice Int
-     roomService Boolean @default(false)
-     roofTop Boolean @default(false)
-     airConditiom Boolean @default(false)
-     bikeRental Boolean @default(false)
+   roomService Boolean @default(false)
+   roofTop Boolean @default(false)
+   airConditiom Boolean @default(false)
+   bikeRental Boolean @default(false)
    
+   Hostel  Hostel? @relation(fields: [hostelId], references: [id], onDelete: Cascade)
+    
 
+   Booking Booking[]
+  
+@@index([hostelId])
 
 }
 
 model Booking{
   id String @id @default(uuid())
-  userName String
-  userId String
-  hostelName String
-  hostelId String
-  roomName String
   roomId String
+  username String
+  userId String
+  hostelOwnerId String
+  startDate DateTime
+  endDate DateTime
+  currency String
+  totalPrice Int
+  paymentStatus Boolean @default(false)
+  paymentIntentId String @unique
+  bookedAt DateTime @default(now())
+hostelId String
+  
+
+  Hostel  Hostel? @relation(fields: [hostelId], references: [id])
+   
+  Room  Room? @relation(fields: [roomId], references: [id])
+   
+
+   @@index([hostelId])
+   @@index([roomId])
+   
+ 
+
+
 
 }

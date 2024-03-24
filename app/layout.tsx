@@ -4,6 +4,10 @@ import "./globals.css";
 
 import { ClerkProvider } from '@clerk/nextjs'
 import NavBar from "@/components/layout/NavBar";
+import Container from "@/components/ui/Container";
+import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,17 +28,29 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
        
       <body className={inter.className}>
+        <ThemeProvider  
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
         <main className="flx flex-col min-h-screen bg-secondary">
         <NavBar />
         <section className="flex-grow">
-        {children}
+          <Container>
+          {children}
+
+          </Container>
+        
         </section>
         
         </main>
-        
+        </ThemeProvider>
+        <Toaster/> 
         </body>
     </html>
     </ClerkProvider>
     
   );
 }
+
+

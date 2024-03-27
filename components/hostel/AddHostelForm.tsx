@@ -35,6 +35,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import AddRoomForm from "../room/AddRoomForm";
+
+
+import RoomCard from "../room/RoomCard";
+import { Separator } from "../ui/separator";
 
 
 
@@ -102,6 +107,7 @@ const AddHostelForm = ({hostel}: AddHostelFormProps) => {
     const [cities, setCities] = useState<ICity[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [isHostelDeleting, setIsHostelDeleting] = useState(false)
+    const [open, setOpen] = useState(false)
 
     const {toast} = useToast()
     const router = useRouter()
@@ -250,7 +256,9 @@ const AddHostelForm = ({hostel}: AddHostelFormProps) => {
           setImageIsDeleting(false)
         })
       }
-    
+      const handleDialogueOpen = () =>{
+        setOpen(prev => !prev)
+      }
 
     return ( <div>
         <Form {...form}>
@@ -538,16 +546,20 @@ const AddHostelForm = ({hostel}: AddHostelFormProps) => {
                 </Button> }
 
                 {hostel && <Button onClick={() => router.push (`/hostel-details/${hostel.id}`)} variant='outline' type='button'><Eye className='mr-2 h-4 w-4'/>View</Button>}
-                {hostel &&  <Dialog>
-  <DialogTrigger><button variant='outline' type='button'><Plus className='mr-2 h-4 w-4'/>  Add Room
-    </button></DialogTrigger>
-  <DialogContent>
-    <DialogHeader>
+                {hostel &&  <Dialog open={open} onOpenChange={setOpen}>
+  <DialogTrigger>
+    <Button type='button' variant='outline' className='max-w-[150px]'>
+      <Plus className='mr-2 h-4 w-4'/>  Add Room
+    </Button>
+    </DialogTrigger>
+  <DialogContent className='max-w-[900px] w-[90%]'>
+    <DialogHeader className='px-2'>
       <DialogTitle>Add a Room!</DialogTitle>
       <DialogDescription>
         Add the details about the room in your hostel.
       </DialogDescription>
     </DialogHeader>
+    <AddRoomForm hostel={hostel} handleDialogueOpen={handleDialogueOpen}/>
   </DialogContent>
 </Dialog>
 }
@@ -562,6 +574,16 @@ const AddHostelForm = ({hostel}: AddHostelFormProps) => {
                 }
    
                     </div>
+                    {hostel && !!hostel.rooms.length && <div>
+                      <Separator/>
+                      <h3 className='text-lg font-semibold my-4'>Hostel Rooms</h3>
+                      <div className='grid grid-cols-1 2xl:grid-cols-2 gap-6'>
+                        {hostel.rooms.map(room =>{
+                          return <RoomCard key={room.id} hostel= {hostel} room= {room}/>
+                        })}
+
+                      </div>
+                      </div>}
                     
                 </div>
                 </div>

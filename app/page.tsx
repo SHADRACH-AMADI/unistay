@@ -1,8 +1,22 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { getHostels } from "@/actions/getHostels";
+import HostelList from "@/components/hostel/HostelList";
 
-export default function Home() {
+interface HomeProps{
+  searchParams: {
+    title: string
+    County: string;
+    constituency: string;
+    Town: string;
+  }
+}
+
+export default async function Home({searchParams}: HomeProps) {
+  const hostels = await getHostels(searchParams)
+
+  if(!hostels) return <div>No Hostels found..</div>
   return (
-    <div>Home Page <Button>Home</Button></div>
+    <div>
+      <HostelList hostels = {hostels}/> 
+    </div>
   );
 }

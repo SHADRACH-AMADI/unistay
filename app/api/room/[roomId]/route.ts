@@ -16,7 +16,7 @@ export async function PATCH(req: Request, { params }: { params: {
         if (!userId) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
-        const roomId = uuidv4();
+       
 
         const room = await prismadb.room.update({
             where: {
@@ -24,7 +24,7 @@ export async function PATCH(req: Request, { params }: { params: {
             },
             data: {
                 ...body,
-                roomId,
+                
             },
         });
 
@@ -63,6 +63,4 @@ export async function DELETE(req: Request, { params }: { params: {
     }
 }
 
-function uuidv4() {
-    throw new Error("Function not implemented.");
-}
+

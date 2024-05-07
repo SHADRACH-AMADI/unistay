@@ -10,8 +10,8 @@ datasource db {
 }
 
 model Hostel{
-  hostelId String
   id String @id @default(uuid())
+  hostelId String
   userId String
   title String @db.Text
   description String 
@@ -27,14 +27,10 @@ model Hostel{
   updatedAt DateTime @default(now())
   rooms Room[]
   bookings Booking[]
-  
-
-
 }
 
 model Room{
   id String @id @default(uuid())
-  roomId String
   hostelId String
   title String
   description String
@@ -51,8 +47,6 @@ model Room{
    bikeRental Boolean @default(false)
    
    Hostel  Hostel? @relation(fields: [hostelId], references: [id], onDelete: Cascade)
-    
-
    Booking Booking[]
   
 @@index([hostelId])
@@ -61,8 +55,10 @@ model Room{
 
 model Booking{
   id String @id @default(uuid())
-  roomId String
-  username String
+  roomId String  
+  hostelId String
+  userName String
+  userEmail String
   userId String
   hostelOwnerId String
   startDate DateTime
@@ -72,11 +68,9 @@ model Booking{
   paymentStatus Boolean @default(false)
   paymentIntentId String @unique
   bookedAt DateTime @default(now())
-hostelId String
   
 
-  Hostel  Hostel? @relation(fields: [hostelId], references: [id])
-   
+  Hostel  Hostel? @relation(fields: [hostelId], references: [id]) 
   Room  Room? @relation(fields: [roomId], references: [id])
    
 
@@ -84,7 +78,4 @@ hostelId String
    @@index([roomId])
    
  
-
-
-
 }

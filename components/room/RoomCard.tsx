@@ -152,7 +152,7 @@ const handleBookRoom = () =>{
             body: JSON.stringify({
                 booking:{
                     hostelOwnerId: hostel.userId,
-                    roomId: room.id,
+                    roomId:room.hostelId,
                     startDate: date.from,
                     endDate: date.to,
                     totalPrice: totalPrice

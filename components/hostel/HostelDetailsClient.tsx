@@ -8,7 +8,7 @@ import AmenityItem from "../AmenityItem";
 import { CupSoda, MapPin, Table2Icon, WashingMachineIcon, WavesIcon, Wind } from "lucide-react";
 import RoomCard from "../room/RoomCard";
 
-const HostelDetailsClient = ({hostel, bookings}:{hostel: HostelWithRooms, bookings?: Booking[]}) => {
+const HostelDetailsClient = ({hostel, bookings}: {hostel: HostelWithRooms, bookings?: Booking[] }) => {
     const {getCountryByCode, getStateByCode} = useLocation()
     const country = getCountryByCode(hostel.County)
     const state = getStateByCode(hostel.County, hostel.constituency)

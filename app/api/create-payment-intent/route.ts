@@ -15,22 +15,20 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { booking, payment_intent_id } = body;
+    const { booking, payment_intent_id, roomId, hostelId } = body;
 
-    // Make sure roomId is provided in the booking object
-    if (!booking.roomId) {
-        return new NextResponse('roomId is required', { status: 400 });
-    }
+    
 
     const bookingData = {
         ...booking,
+        hostelId: hostelId,
+        roomId: roomId,
         userName: user.firstName,
         userEmail: user.emailAddresses[0].emailAddress,
         userId: user.id,
         currency: 'Kes',
         paymentIntentId: payment_intent_id,
-        hostelId: booking.hostelId,
-        hostelOwnerId: user.id,
+        
         
         
     };

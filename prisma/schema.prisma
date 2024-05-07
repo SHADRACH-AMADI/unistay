@@ -55,8 +55,8 @@ model Room{
 
 model Booking{
   id String @id @default(uuid())
-  roomId String  
-  hostelId String
+  roomId String?  
+  hostelId String?
   userName String
   userEmail String
   userId String

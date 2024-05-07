@@ -40,6 +40,7 @@ const RoomCard = ({hostel, room, bookings = []}: RoomCardProps) => {
     const [totalPrice, setTotalPrice] = useState(room.roomPrice)
     const [days, setDays] = useState(30)
     const {userId} = useAuth()
+    const isBookRoom = pathname.includes('book-room')
 
 
     const router = useRouter()
@@ -215,50 +216,51 @@ const handleBookRoom = () =>{
             <Separator/>
 
         </CardContent>
+        {!isBookRoom &&  <CardFooter>
 
-        <CardFooter>
+{
+    isHostelDetailsPage ? <div className="flex flex-col gap-6">
+        <div>
+            <div className="mb-2">Select the duration of time you'll stay in this room!</div>
+            <DatePickerWithRange date = {date} setDate = {setDate} disabledDates = {disabledDates}/>
+        </div>
+        <div>Total Price: <span className="font-bold">Kes{room.roomPrice}</span>/PM <span className="font-bold">{days} Days</span></div>
 
-        {
-            isHostelDetailsPage ? <div className="flex flex-col gap-6">
-                <div>
-                    <div className="mb-2">Select the duration of time you'll stay in this room!</div>
-                    <DatePickerWithRange date = {date} setDate = {setDate} disabledDates = {disabledDates}/>
-                </div>
-                <div>Total Price: <span className="font-bold">Kes{room.roomPrice}</span>/PM <span className="font-bold">{days} Days</span></div>
+        <Button onClick={() => handleBookRoom()} disabled={bookingIsLoading} type="button">
+            {bookingIsLoading ? <Loader2 className="mr-2 h-4 w-4"/> : <Wand2 className="mr-2 h-4 w-4"/>}
+            {bookingIsLoading ? 'Loading...' : 'Book Room'}
+        </Button>
 
-                <Button onClick={() => handleBookRoom()} disabled={bookingIsLoading} type="button">
-                    {bookingIsLoading ? <Loader2 className="mr-2 h-4 w-4"/> : <Wand2 className="mr-2 h-4 w-4"/>}
-                    {bookingIsLoading ? 'Loading...' : 'Book Room'}
-                </Button>
 
-    
-            </div> : <div className="flex w-full justify-between">
-                <Button disabled={isLoading} type="button" variant='ghost' onClick={() => 
-                    handleRoomDelete(room)
-                }>
-                    {isLoading ? <><Loader2 className="mr-2 h-4 w-4"/>Deleting...</> : <><Trash  className="mr-2 h-4 w-4"/> Delete</>}
-                </Button>
-                <Dialog open={open} onOpenChange={setOpen}>
-  <DialogTrigger>
-    <Button type='button' variant='outline' className='max-w-[150px]'>
-      <Pencil className='mr-2 h-4 w-4'/>  Edit Room
-    </Button>
-    </DialogTrigger>
-  <DialogContent className='max-w-[900px] w-[90%]'>
-    <DialogHeader className='px-2'>
-      <DialogTitle>Edit Room!</DialogTitle>
-      <DialogDescription>
-        Apply changes to this room.
-      </DialogDescription>
-    </DialogHeader>
-    <AddRoomForm hostel={hostel} room={room} handleDialogueOpen={handleDialogueOpen}/>
-  </DialogContent>
+    </div> : <div className="flex w-full justify-between">
+        <Button disabled={isLoading} type="button" variant='ghost' onClick={() => 
+            handleRoomDelete(room)
+        }>
+            {isLoading ? <><Loader2 className="mr-2 h-4 w-4"/>Deleting...</> : <><Trash  className="mr-2 h-4 w-4"/> Delete</>}
+        </Button>
+        <Dialog open={open} onOpenChange={setOpen}>
+<DialogTrigger>
+<Button type='button' variant='outline' className='max-w-[150px]'>
+<Pencil className='mr-2 h-4 w-4'/>  Edit Room
+</Button>
+</DialogTrigger>
+<DialogContent className='max-w-[900px] w-[90%]'>
+<DialogHeader className='px-2'>
+<DialogTitle>Edit Room!</DialogTitle>
+<DialogDescription>
+Apply changes to this room.
+</DialogDescription>
+</DialogHeader>
+<AddRoomForm hostel={hostel} room={room} handleDialogueOpen={handleDialogueOpen}/>
+</DialogContent>
 </Dialog>
 
-            </div>
+    </div>
 
-        }
-        </CardFooter>
+}
+</CardFooter>}
+
+       
 
 
         </Card>);

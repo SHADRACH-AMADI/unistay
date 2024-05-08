@@ -118,7 +118,7 @@ const RoomPaymentForm = ({clientSecret, handleSetPaymentSuccess}: RoomPaymentFor
   Please wait as we process your payments!
   </AlertDescription>
 </Alert>}
-         <Button disabled={isloading}>{isloading ? 'Processing Payment...': 'Please Pay Now'}</Button>
+         <Button disabled={isloading}>{isloading ? 'Processing Payment...': 'Pay Now'}</Button>
          
     </form> );
 }

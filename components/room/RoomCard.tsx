@@ -216,7 +216,7 @@ const handleBookRoom = () =>{
             <Separator/>
 
         </CardContent>
-        {!isBookRoom &&  <CardFooter>
+        {!!!isBookRoom &&  <CardFooter>
 
 {
     isHostelDetailsPage ? <div className="flex flex-col gap-6">

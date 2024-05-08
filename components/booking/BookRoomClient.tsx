@@ -33,7 +33,7 @@ const BookRoomClient = () => {
         setPaymentSuccess(value)
     }
 
-    if(!paymentSuccess) return <div className='flex items-center'>
+    if(paymentSuccess) return <div className='flex items-center flex-col gap-4 '>
         <div className='text-teal-500 text-center'>Payment Successful!!</div>
         <Button onClick={() =>router.push('/my-bookings')}>View Bookings!!</Button>
     </div>

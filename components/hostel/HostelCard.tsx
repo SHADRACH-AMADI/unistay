@@ -48,7 +48,7 @@ const HostelCard = ({hostel}:{hostel: HostelWithRooms}) => {
 
                     </>}
                     </div>
-                    {isMyHostels && <Button onClick={() => router.push(`/hostel${hostel.id}`)} variant='outline'>Edit</Button>}
+                    {isMyHostels && <Button onClick={() => router.push(`/hostel/${hostel.id}`)} variant='outline'>Edit</Button>}
 
                 </div>
             </div>

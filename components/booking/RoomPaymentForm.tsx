@@ -11,17 +11,21 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Terminal } from "lucide-react";
+import { Booking } from "@prisma/client";
+import { endOfDay, startOfDay } from "date-fns";
 
 interface RoomPaymentFormProps {
     clientSecret: string;
     handleSetPaymentSuccess: (value: boolean) => void
 }
 
+
 const RoomPaymentForm = ({clientSecret, handleSetPaymentSuccess}: RoomPaymentFormProps) => {
     const{bookingRoomData, resetBookRoom} = useBookRoom()
     const stripe = useStripe()
     const elements = useElements()
     const [isloading, setIsLoading] = useState(false)
+    const [mpesaReference, setMpesaReference] = useState('');
     const {toast} = useToast()
     const router = useRouter()
 
@@ -47,7 +51,7 @@ const RoomPaymentForm = ({clientSecret, handleSetPaymentSuccess}: RoomPaymentFor
 
         try {
             //date overlaps
-
+          
             stripe.confirmPayment({elements, redirect: 'if_required'}).then((result)=>{
                 if(!result.error){
                     axios.patch(`/api/booking/${result.paymentIntent.id}`).then((res) =>{
@@ -88,16 +92,39 @@ const RoomPaymentForm = ({clientSecret, handleSetPaymentSuccess}: RoomPaymentFor
 
     return ( <form onSubmit={handleSubmit} id="payment-form">
         <h2 className="font-semibold mb-2 text-lg">Billing Address/Mpesa</h2>
+        <p className="text-gray-600 mb-4">
+            To pay via Mpesa, follow these instructions:<br/>
+            1. Go to your Mpesa menu<br/>
+            2. Select Lipa na Mpesa<br/>
+            3. Choose Paybill<br/>
+            4. Enter Paybill Number: <strong>2938203</strong><br/>
+            5. Enter Account Number: <strong>UNISTAY.283</strong><br/>
+            6. Enter the Amount<br/>
+            7. Enter your Mpesa PIN<br/>
+            8. After making the payment, paste the Mpesa Reference Code here.
+        </p>
         <AddressElement options={{
             mode: 'billing',
             
         }
         }/>
+        <div className="mb-4">
+            <label htmlFor="mpesaRef" className="block text-sm font-medium text-gray-700">Mpesa Reference Code</label>
+            <input
+                type="text"
+                name="mpesaRef"
+                id="mpesaRef"
+                autoComplete="off"
+                value={mpesaReference}
+                onChange={(e) => setMpesaReference(e.target.value)}
+                className="mt-1 p-2 border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md"
+            />
+        </div>
          <h2 className="font-semibold mt-4 mb-2 text-lg">Payment Information</h2>
          <PaymentElement id="payment-element" options={{layout: 'tabs'}}/>
          <div className="flex flex-col gap-1">
             <Separator/>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 mb-4">
                 <h2 className="font-semibold mb-1 text-lg">Booking Summary</h2>
                 <div>Check-in Date will be on {startDate} at 10AM</div>
                 <div>Your Rent expires on {endDate} </div>
@@ -119,7 +146,6 @@ const RoomPaymentForm = ({clientSecret, handleSetPaymentSuccess}: RoomPaymentFor
   </AlertDescription>
 </Alert>}
          <Button disabled={isloading}>{isloading ? 'Processing Payment...': 'Pay Now'}</Button>
-         
     </form> );
 }
  

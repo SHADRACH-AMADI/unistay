@@ -15,13 +15,12 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { booking, payment_intent_id, roomId, hostelId } = body;
+    const { booking, payment_intent_id, roomId } = body;
 
     
 
     const bookingData = {
         ...booking,
-        hostelId: hostelId,
         roomId: roomId,
         userName: user.firstName,
         userEmail: user.emailAddresses[0].emailAddress,

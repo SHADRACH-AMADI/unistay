@@ -33,6 +33,14 @@ const BookRoomClient = () => {
         setPaymentSuccess(value)
     }
 
+    if(!paymentSuccess && (!bookingRoomData || !clientSecret)) return <div className='text-red-500 flex items-center flex-col gap-4 '>
+    This Page couldn't be Loaded
+    <div className='flex items-center gap-4'>
+    <Button variant="outline" onClick={() =>router.push('/my-bookings')}>Go Home</Button>
+    <Button onClick={() =>router.push('/my-bookings')}>View Bookings!!</Button>
+    </div>
+    </div>
+
     if(paymentSuccess) return <div className='flex items-center flex-col gap-4 '>
         <div className='text-teal-500 text-center'>Payment Successful!!</div>
         <Button onClick={() =>router.push('/my-bookings')}>View Bookings!!</Button>

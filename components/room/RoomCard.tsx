@@ -70,7 +70,8 @@ const RoomCard = ({hostel, room, bookings = []}: RoomCardProps) => {
     const disabledDates = useMemo(() =>{
         let dates: Date[] = []
 
-        const roomBookings = bookings.filter(booking => booking.roomId == room.id)
+        const roomBookings = bookings.filter(booking => booking.roomId == room.id && 
+            booking.paymentStatus)
 
       //ensures dates in between have been reserved
         roomBookings.forEach(booking =>{

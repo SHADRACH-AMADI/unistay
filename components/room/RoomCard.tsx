@@ -55,12 +55,7 @@ const RoomCard = ({hostel, room, bookings = []}: RoomCardProps) => {
 
             setDays(dayCount)
 
-            if(dayCount && room.roomPrice){
-                setTotalPrice(dayCount * room.roomPrice)
-                
-            }else{
-                setTotalPrice(room.roomPrice)
-            }
+           
 
 
         }

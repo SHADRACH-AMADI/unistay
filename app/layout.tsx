@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ export default function RootLayout({
             disableTransitionOnChange>
         <main className="flx flex-col min-h-screen bg-secondary">
         <NavBar />
+       
         <section className="flex-grow">
           <Container>
           {children}

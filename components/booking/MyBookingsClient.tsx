@@ -122,7 +122,7 @@ const handleBookRoom = () =>{
             <CardTitle>{Hostel.title}</CardTitle>
             <CardDescription><div className="font-semibold mt-4">
                 <AmenityItem><MapPin className="h-4 w-4"/> {country?.name},{state?.name},{Hostel.constituency}</AmenityItem>
-                <p className="py-2">{Hostel.locationDescription}</p>
+                
             </div></CardDescription>
 
             <CardTitle>{Room.title}</CardTitle>
@@ -153,8 +153,8 @@ const handleBookRoom = () =>{
                 <CardTitle>Booking Details</CardTitle>
                 <div className="text-primary/90">
                     <div>Room booked {booking.userName} for {dayCount} days - {moment(booking.bookedAt).fromNow()} </div>
-                    <div>Check-in: {startDate} at 10AM </div>
-                    <div>Rent expires on: {endDate} at 10AM </div>
+                    <div >Check-in: {startDate} at 10AM </div>
+                    <div>Rent expires -: {endDate} at 10AM </div>
                     {booking.paymentStatus ? <div className="text-teal-500">Paid Kes{booking.totalPrice} - Room Reserved</div> :
                     <div className="text-red-500">Not Paid Kes{booking.totalPrice} - Room Not Reserved</div> }
                 </div>

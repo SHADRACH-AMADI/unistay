@@ -126,8 +126,8 @@ const RoomPaymentForm = ({clientSecret, handleSetPaymentSuccess}: RoomPaymentFor
             <Separator/>
             <div className="flex flex-col gap-1 mb-4">
                 <h2 className="font-semibold mb-1 text-lg">Booking Summary</h2>
-                <div>Check-in Date will be on {startDate} at 10AM</div>
-                <div>Your Rent expires on {endDate} </div>
+                <div>Check-in Date - {startDate} at 10AM</div>
+                <div>Rent expiry - {endDate} </div>
                 <Separator/>
                 <div className="font-bold text-lg">
                     Total Price: Kes{bookingRoomData?.totalPrice}
